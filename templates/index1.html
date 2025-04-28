@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Disease Detector</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        .upload-section {
+  background-color: rgba(255, 255, 255, 0.9);
+  margin: 40px auto;
+  padding: 40px 20px;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  text-align: center;
+}
+
+.upload-section h1 {
+  font-size: 2rem;
+  color: #236e5f;
+  margin-bottom: 20px;
+}
+
+.upload-section input[type="file"] {
+  padding: 10px;
+  font-size: 1rem;
+  margin: 15px 0;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.upload-section button {
+  background-color: #236e5f;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.upload-section button:hover {
+  background-color: #1c5d52;
+}
+
+#predictionResult {
+  background-color: #e9f9f8;
+  margin-top: 30px;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+#predictionResult h2 {
+  color: #236e5f;
+}
+
+#predictionResult p {
+  font-size: 1.1rem;
+  margin: 10px 0;
+}
+
+#uploadedImage {
+  margin-top: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  max-width: 100%;
+}
+
+    </style>
+    </head>
+<body>
+    <div class="upload-section">
+        <h1>Upload Pet Image</h1>
+      
+        <form id="uploadForm" enctype="multipart/form-data">
+            <input type="file" name="image" accept="image/*" required>
+            <button type="submit">Predict</button>
+        </form>
+      
+        <div id="predictionResult" style="display: none;">
+            <h2>Prediction Result</h2>
+            <p><strong>Disease:</strong> <span id="disease"></span></p>
+            <p><strong>Confidence:</strong> <span id="confidence"></span>%</p>
+            <img id="uploadedImage" src="" alt="Uploaded Image">
+        </div>
+      </div>
+
+    <script>
+        // Handle form submission using AJAX
+        $("#uploadForm").submit(function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            var formData = new FormData(this); // Get the form data
+
+            $.ajax({
+    url: 'http://127.0.0.1:5000/predict',  // Explicitly specifying port 5000
+    type: 'POST',
+    data: formData,
+    processData: false,
+    contentType: false,
+    success: function(response) {
+        // Handle success (display results)
+        $('#disease').text(response.disease);
+        $('#confidence').text(response.confidence);
+        $('#uploadedImage').attr('src', '/static/uploads/' + response.filename);
+        $('#predictionResult').show();
+    },
+    error: function() {
+        alert('Error while uploading image');
+    }
+});
+
+        });
+    </script>
+</body>
+</html>

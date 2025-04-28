@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us </title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Header Styling */
+        header {
+            background-color: #f8f9fc;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 50px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            color: #060606;
+            margin: 0;
+        }
+
+        nav a {
+            margin: 0 15px;
+            font-size: 1rem;
+            color: #333;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            color: #a6ceff;
+            box-shadow: #0073ff;
+        }
+
+        /* Main Section Styling */
+        main {
+            padding: 100px 0;
+            text-align: center;
+            color: #101111;
+            position: relative;
+            z-index: 1;
+        }
+        nav a.active {
+  position: relative;
+  color: #4caaa6;
+  font-weight: bold;
+}
+
+nav a.active::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -5px;
+  transform: translateX(-50%);
+  width: 50%;
+  height: 5px;
+  background-color: #4caaa6;
+  border-radius: 0 0 10px 10px; /* arc effect */
+}
+
+        /* Background images with sliding effect */
+        main::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("about.avif");
+            background-size: cover;
+            background-repeat: repeat-x;
+            animation: slideBackground 20s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes slideBackground {
+            0% {
+                background-position: 0 0;
+            }
+            100% {
+                background-position: -2000px 0;
+            }
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        p.about {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto 40px auto;
+            padding: 0 20px;
+        }
+
+        .profile-container {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .profile-card {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 250px;
+            padding: 20px;
+            transition: transform 0.3s ease;
+            text-align: center;
+        }
+
+        .profile-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .profile-card img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+        }
+
+        .profile-card h3 {
+            font-size: 1.5rem;
+            margin: 10px 0;
+            color: #333;
+        }
+
+        .profile-card p {
+            font-size: 1rem;
+            margin: 5px 0;
+            color: #666;
+        }
+
+        .contact-info {
+            margin-top: 10px;
+        }
+
+        .contact-info p {
+            margin: 5px 0;
+            font-size: 0.9rem;
+        }
+
+        .contact-info a {
+            color: #0175ff;
+            text-decoration: none;
+        }
+
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer Styling */
+        footer {
+            background-color: #f8f9fc;
+            padding: 20px 0;
+            text-align: center;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        footer p {
+            margin: 5px 0;
+        }
+
+        footer a {
+            color: #0175ff;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+        .main {
+    background-color: rgba(255, 255, 255, 0.721); /* white with 80% transparency */
+    border-radius: 16px;
+    padding: 1px 1px;
+    max-width: 1000px;
+    margin: auto;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <img src="petbuddy.jpg" width="60" alt="Logo" style="border-radius: 8px;" />
+            <h1>Pet Buddy</h1>
+          </div>
+        <nav>
+                <a href="index.html">Home</a>
+                <a href="about.html">About Us</a>
+                <a href="disease.html">Disease Prediction</a>
+                <a href="consultation.html">Consultations</a>
+                <a href="diet.html">Generate your diet Plan</a>
+                <a href="reminder.html">Set Your Reminder</a>
+                <a href="contact.html">Contact Us</a>
+                <a id="profile-link" href="profile.html" style="display: none;">Profile</a>
+                <a id="logout-link" href="#" style="display: none;" onclick="logout()">Logout</a>
+                <a id="login-link" href="login.html">Login</a>
+                <a id="signup-link" class="signup" href="signup.html">Sign Up</a>
+              </nav>
+              
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <div class="main ">
+        <h2>About Us</h2>
+        <p class="about">
+            Welcome to Pet Buddy – your trusted digital partner in caring for your furry, feathered, or four-legged friends!
+
+            At Pet Buddy, we understand the joy of pet companionship—and the challenges that come with it. From recognizing early symptoms of health issues to managing diets, scheduling vet appointments, and ensuring timely vaccinations, pet care can sometimes feel overwhelming. That’s why we’ve built an intelligent, all-in-one platform to make your pet-parenting journey smarter, easier, and more compassionate.
+           
+         <h2>What we do?</h2>
+            <p class="about">
+                Pet Buddy is an AI-powered platform that supports pet owners in managing their pets' health, nutrition, and well-being. Our mission is to bring advanced, accessible, and personalized pet care to everyone—especially in areas with limited veterinary services.
+
+
+        <h2>How our website works?</h2>
+                <p class="about">
+                    1. Symptom-Based Disease Prediction
+                    Using AI, our platform allows you to input your pet’s symptoms and receive predictive insights and early warnings about potential health conditions. While it's not a replacement for a vet, it helps you make informed decisions quickly.
+                    
+                    <br><br>2. AI-Generated Diet Plans
+                    Simply enter your pet's details—such as breed, age, gender, and health condition—and our system will generate a personalized diet plan. It includes meal suggestions, portion sizes, nutritional breakdowns, and supplement recommendations.
+                    
+                    <br><br>3. Online Vet Consultations
+                    Access affordable and convenient veterinary consultations directly through our platform. Chat or schedule mock consultations with licensed professionals from the comfort of your home.
+                    
+                    <br><br>4. Vaccination Reminders
+                    Never miss a shot! Add your pet’s vaccination schedule and receive timely reminders via our calendar tool, so your pet stays protected and healthy.
+                    
+                    <br><br>5. AI Chatbot Assistance
+                    Need quick help or have a pet-related question? Our smart chatbot is here 24/7 to offer reliable answers, guide you through our features, or direct you to more advanced tools within the platform.
+        <h2>Our Vision</h2>
+                    <p class="about">
+                        We envision a world where every pet owner—no matter where they are—can access trusted advice, tailored care, and the tools they need to provide the best life possible for their pets.Whether you're a first-time pet parent or an experienced animal lover, Pet Buddy is here to support you every step of the way. Sign up today and experience the future of personalized pet care.
+        </div>
+
+        <h2>Meet Our Team</h2>
+        <div class="profile-container">
+            
+            <!-- Profile 3 -->
+            <div class="profile-card">
+                <img src="shoaib.jpg" alt="Vishal">
+                <h3>Shoaib Nisar</h3>
+                <p>Backend Lead</p>
+            </div>
+            
+            <!-- Profile 1 -->
+            <div class="profile-card">
+                <img src="nishik.jpg" alt="Nishik">
+                <h3>Nishik Kar</h3>
+                <p>Frontend Lead</p>
+            </div>
+
+            <!-- Profile 2 -->
+            <div class="profile-card">
+                <img src="shivendra.jpg" alt="Shivendra">
+                <h3>Shivendra Kumar</h3>
+                <p>Data Analyst</p>
+            </div>
+
+            <!-- Profile 4 -->
+            <div class="profile-card">
+                <img src="sounak.jpg" alt="Shoaib">
+                <h3>Sounak Nandi</h3>
+                <p>AI/ML Lead</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; All rights reserved.</p>
+        <a href="#">Back to top</a>
+    </footer>
+
+    <script>
+        // Check if user is logged in by checking for the token in localStorage
+        document.addEventListener("DOMContentLoaded", () => {
+            const token = localStorage.getItem("token");
+
+            if (token) {
+                // If user is logged in, hide login/signup and show profile/logout buttons
+                document.getElementById("profile-link").style.display = "inline-block";
+                document.getElementById("logout-link").style.display = "inline-block";
+                document.getElementById("login-link").style.display = "none";
+                document.getElementById("signup-link").style.display = "none";
+            } else {
+                // If not logged in, show login/signup
+                document.getElementById("login-link").style.display = "inline-block";
+                document.getElementById("signup-link").style.display = "inline-block";
+                document.getElementById("profile-link").style.display = "none";
+                document.getElementById("logout-link").style.display = "none";
+            }
+        });
+
+        // Logout function to clear localStorage and redirect to login page
+        function logout() {
+            localStorage.clear();
+            window.location.href = "login.html";  // Redirect to login page after logout
+        }
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+          const currentPage = window.location.pathname.split("/").pop(); // Get the file name
+          const navLinks = document.querySelectorAll("nav a");
+      
+          navLinks.forEach(link => {
+            if (link.getAttribute("href") === currentPage) {
+              link.classList.add("active");
+            }
+          });
+      
+          // Token-based login check
+          const token = localStorage.getItem("token");
+          document.getElementById("profile-link").style.display = token ? "inline-block" : "none";
+          document.getElementById("logout-link").style.display = token ? "inline-block" : "none";
+          document.getElementById("login-link").style.display = token ? "none" : "inline-block";
+          document.getElementById("signup-link").style.display = token ? "none" : "inline-block";
+        });
+      </script>
+      
+</body>
+</html>

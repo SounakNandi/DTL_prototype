@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pet Buddy - Video Consultation</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+    }
+
+      /* Header Styling */
+      header {
+            background-color: #f8f9fc;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 50px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        nav a.active {
+  position: relative;
+  color: #4caaa6;
+  font-weight: bold;
+}
+
+nav a.active::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -5px;
+  transform: translateX(-50%);
+  width: 50%;
+  height: 5px;
+  background-color: #4caaa6;
+  border-radius: 0 0 10px 10px; /* arc effect */
+}
+        header h1 {
+            font-size: 1.8rem;
+            color: #060606;
+            margin: 0;
+        }
+
+        nav a {
+            margin: 0 15px;
+            font-size: 1rem;
+            color: #333;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            color: #a6ceff;
+            box-shadow: #0073ff;
+        }
+
+    .video-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 30px;
+    }
+
+    iframe {
+      width: 90%;
+      max-width: 1000px;
+      height: 600px;
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+/* Footer Styling */
+footer {
+    background-color: #f8f9fc;
+    padding: 20px 0;
+    text-align: center;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+footer p {
+    margin: 5px 0;
+}
+
+footer a {
+    color: #0175ff;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+  </style>
+</head>
+<body>
+
+  <header>
+    <div style="display: flex; align-items: center; gap: 15px;">
+    <img src="petbuddy.jpg" width="60" alt="Logo" style="border-radius: 8px;" />
+    <h1>Pet Buddy</h1>
+  </div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="about.html">About Us</a>
+    <a href="disease.html">Disease Prediction</a>
+    <a href="consultation.html">Consultations</a>
+    <a href="diet.html">Generate your diet Plan</a>
+    <a href="reminder.html">Set Your Reminder</a>
+    <a href="contact.html">Contact Us</a>
+    <a id="profile-link" href="profile.html" style="display: none;">Profile</a>
+    <a id="logout-link" href="#" style="display: none;" onclick="logout()">Logout</a>
+    <a id="login-link" href="login.html">Login</a>
+    <a id="signup-link" class="signup" href="signup.html">Sign Up</a>
+  </nav>
+  
+</header>
+
+  <div class="video-container">
+    <iframe
+      src="https://meet.jit.si/PetBuddy_VideoConsultation"
+      allow="camera; microphone; fullscreen; display-capture"
+    ></iframe>
+  </div>
+<!-- Footer -->
+<footer>
+    <p>&copy; 2025 Travellers Verdict. All rights reserved.</p>
+    <a href="#">Back to top</a>
+</footer>
+
+<script>
+    // Check if user is logged in by checking for the token in localStorage
+    document.addEventListener("DOMContentLoaded", () => {
+        const token = localStorage.getItem("token");
+
+        if (token) {
+            // If user is logged in, hide login/signup and show profile/logout buttons
+            document.getElementById("profile-link").style.display = "inline-block";
+            document.getElementById("logout-link").style.display = "inline-block";
+            document.getElementById("login-link").style.display = "none";
+            document.getElementById("signup-link").style.display = "none";
+        } else {
+            // If not logged in, show login/signup
+            document.getElementById("login-link").style.display = "inline-block";
+            document.getElementById("signup-link").style.display = "inline-block";
+            document.getElementById("profile-link").style.display = "none";
+            document.getElementById("logout-link").style.display = "none";
+        }
+    });
+
+    // Logout function to clear localStorage and redirect to login page
+    function logout() {
+        localStorage.clear();
+        window.location.href = "login.html";  // Redirect to login page after logout
+    }
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const currentPage = window.location.pathname.split("/").pop(); // Get the file name
+      const navLinks = document.querySelectorAll("nav a");
+  
+      navLinks.forEach(link => {
+        if (link.getAttribute("href") === currentPage) {
+          link.classList.add("active");
+        }
+      });
+  
+      // Token-based login check
+      const token = localStorage.getItem("token");
+      document.getElementById("profile-link").style.display = token ? "inline-block" : "none";
+      document.getElementById("logout-link").style.display = token ? "inline-block" : "none";
+      document.getElementById("login-link").style.display = token ? "none" : "inline-block";
+      document.getElementById("signup-link").style.display = token ? "none" : "inline-block";
+    });
+  </script>
+  
+</body>
+</html>

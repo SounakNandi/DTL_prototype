@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pet Vaccination Reminder</title>
+  <style>
+    body {
+      background-image: url("reminder.png");
+      background-size:cover;
+      background-position:cover;
+      font-family: 'Segoe UI', sans-serif;
+     
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      margin-top: 100px;
+      margin: 50px auto;
+      background: white;      
+      background-color: rgba(255, 255, 255, 0.721); /* white with 80% transparency */
+    border-radius: 16px;
+    padding: 5px 30px;
+    max-width: 700px;
+
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 25px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      color: #555;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+   /* Header Styling */
+   header {
+            background-color: #f8f9fc;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 50px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        nav a.active {
+  position: relative;
+  color: #4caaa6;
+  font-weight: bold;
+}
+
+
+nav a.active::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -5px;
+  transform: translateX(-50%);
+  width: 50%;
+  height: 5px;
+  background-color: #4caaa6;
+  border-radius: 0 0 10px 10px; /* arc effect */
+}
+        header h1 {
+            font-size: 1.8rem;
+            color: #060606;
+            margin: 0;
+        }
+
+        nav a {
+            margin: 0 15px;
+            font-size: 1rem;
+            color: #333;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        nav a:hover {
+            color: #a6ceff;
+            box-shadow: #236e5f;
+        }
+
+    button {
+      width: 100%;
+      background-color: #236e5f;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #207074;
+    }
+
+    #diet-output {
+      margin-top: 30px;
+      background: #f9f9f9;
+      padding: 20px;
+      border-left: 4px solid #236e5f;
+      border-radius: 8px;
+      white-space: pre-wrap;
+    }
+
+    .loading {
+      text-align: center;
+      color: #555;
+      font-style: italic;
+    }
+    /* Footer Styling */
+    footer {
+      margin-top: 170px;
+      background-color: #f8f9fc;
+      padding: 1px 0;
+      text-align: center;
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    footer p {
+      margin: 5px 0;
+    }
+
+    footer a {
+      color: #236e5f;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div style="display: flex; align-items: center; gap: 15px;">
+        <img src="petbuddy.jpg" width="60" alt="Logo" style="border-radius: 8px;" />
+        <h1>Pet Buddy</h1>
+      </div>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="disease.html">Disease Prediction</a>
+        <a href="consultation.html">Consultations</a>
+        <a href="diet.html">Generate your diet Plan</a>
+        <a href="reminder.html">Set Your Reminder</a>
+        <a href="contact.html">Contact Us</a>
+        <a id="profile-link" href="profile.html" style="display: none;">Profile</a>
+        <a id="logout-link" href="#" style="display: none;" onclick="logout()">Logout</a>
+        <a id="login-link" href="login.html">Login</a>
+        <a id="signup-link" class="signup" href="signup.html">Sign Up</a>
+      </nav>
+  </header>
+  <div class="container">
+    <h2>Set Vaccination Reminder</h2>
+    <form id="reminderForm">
+      <input type="text" name="petName" class="rohit" placeholder="Pet Name" required />
+      <input type="email" name="ownerEmail" class="rohit" placeholder="Owner Email" required />
+      <input type="text" name="vaccineName" class="rohit" placeholder="Vaccine Name" required />
+      <input type="date" name="vaccineDate" class="rohit" required />
+      <button type="submit">Set Reminder</button>
+    </form>
+    <p id="message"></p>
+  </div>
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Pet Buddy. All rights reserved.</p>
+    <a href="#">Back to top</a>
+  </footer>
+  <script>
+    // frontend/scripts/reminder.js
+document
+  .getElementById("reminderForm")
+  .addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    const formData = new FormData(this);
+    const data = Object.fromEntries(formData.entries());
+
+    try {
+      const response = await fetch("http://localhost:3000/add-reminder", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+      console.log(result);
+      alert("Reminder set successfully!");
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Something went wrong. Please try again.");
+    }
+  });
+
+  </script>
+  <script>
+    // Check if user is logged in by checking for the token in localStorage
+    document.addEventListener("DOMContentLoaded", () => {
+      const token = localStorage.getItem("token");
+
+      if (token) {
+        document.getElementById("profile-link").style.display = "inline-block";
+        document.getElementById("logout-link").style.display = "inline-block";
+        document.getElementById("login-link").style.display = "none";
+        document.getElementById("signup-link").style.display = "none";
+      } else {
+        document.getElementById("login-link").style.display = "inline-block";
+        document.getElementById("signup-link").style.display = "inline-block";
+        document.getElementById("profile-link").style.display = "none";
+        document.getElementById("logout-link").style.display = "none";
+      }
+    });
+
+    function logout() {
+      localStorage.clear();
+      window.location.href = "login.html";
+    }
+  </script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const currentPage = window.location.pathname.split("/").pop(); // Get the file name
+      const navLinks = document.querySelectorAll("nav a");
+  
+      navLinks.forEach(link => {
+        if (link.getAttribute("href") === currentPage) {
+          link.classList.add("active");
+        }
+      });
+  
+      // Token-based login check
+      const token = localStorage.getItem("token");
+      document.getElementById("profile-link").style.display = token ? "inline-block" : "none";
+      document.getElementById("logout-link").style.display = token ? "inline-block" : "none";
+      document.getElementById("login-link").style.display = token ? "none" : "inline-block";
+      document.getElementById("signup-link").style.display = token ? "none" : "inline-block";
+    });
+    </script>
+</body>
+</html>

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pet Parenting Tips</title>
+  <style>
+    body {
+      background-image: url("petparent.jpg");
+      background-size:cover;
+      background-position:top;
+      font-family: 'Segoe UI', sans-serif;
+     
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      margin-top: 100px;
+      margin: 50px auto;
+      background: white;      
+      background-color: rgba(255, 255, 255, 0.721); /* white with 80% transparency */
+    border-radius: 16px;
+    padding: 5px 30px;
+    max-width: 700px;
+
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 25px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      color: #555;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+   /* Header Styling */
+   header {
+            background-color: #f8f9fc;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 50px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        nav a.active {
+  position: relative;
+  color: #4caaa6;
+  font-weight: bold;
+}
+
+
+nav a.active::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -5px;
+  transform: translateX(-50%);
+  width: 50%;
+  height: 5px;
+  background-color: #4caaa6;
+  border-radius: 0 0 10px 10px; /* arc effect */
+}
+        header h1 {
+            font-size: 1.8rem;
+            color: #060606;
+            margin: 0;
+        }
+
+        nav a {
+            margin: 0 15px;
+            font-size: 1rem;
+            color: #333;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        nav a:hover {
+            color: #a6ceff;
+            box-shadow: #236e5f;
+        }
+
+    button {
+      width: 100%;
+      background-color: #236e5f;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #207074;
+    }
+
+    #diet-output {
+      margin-top: 30px;
+      background: #f9f9f9;
+      padding: 20px;
+      border-left: 4px solid #236e5f;
+      border-radius: 8px;
+      white-space: pre-wrap;
+    }
+
+    .loading {
+      text-align: center;
+      color: #555;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+    <header>
+      <div style="display: flex; align-items: center; gap: 15px;">
+        <img src="petbuddy.jpg" width="60" alt="Logo" style="border-radius: 8px;" />
+        <h1>Pet Buddy</h1>
+      </div>
+    <nav>
+          <a href="index.html">Home</a>
+          <a href="about.html">About Us</a>
+          <a href="disease.html">Disease Prediction</a>
+          <a href="consultation.html">Consultations</a>
+          <a href="diet.html">Generate your diet Plan</a>
+          <a href="reminder.html">Set Your Reminder</a>
+          <a href="contact.html">Contact Us</a>
+          <a id="profile-link" href="profile.html" style="display: none;">Profile</a>
+          <a id="logout-link" href="#" style="display: none;" onclick="logout()">Logout</a>
+          <a id="login-link" href="login.html">Login</a>
+          <a id="signup-link" class="signup" href="signup.html">Sign Up</a>
+        </nav>
+      </header>
+  <div class="container">
+    <h2>Get Your First Time Pet Parenting Tips</h2>
+    <form id="petparent-form">
+      <label for="pet name" >Pet Name :</label>
+      <input type="text" id="pet_name" required>
+
+      <label for="pet Category">Pet Category:</label>
+      <select id="pet_category">
+        <option>Select</option>
+        <option>Dog</option>
+        <option>Cat</option>
+      </select>
+
+      <label for="breed">Breed:</label>
+      <input type="text" id="breed" required>
+
+      <label for="age">How long have you been raising this pet :</label>
+      <input type="number" id="age">
+
+      <label for="gender">Pet Gender:</label>
+      <select id="gender">
+        <option>Select</option>
+        <option>Male</option>
+        <option>Female</option>
+      </select>
+
+      <label for="firsttimeraising">Have you raised any pets before:</label>
+      <input type="text" id="firsttimeraising" >
+
+      <label for="petraised">If yes, which pet have you raised </label>
+      <input type="text" id="petraised" >
+      <button type="submit">Generate Better Parenting Tips </button>
+    </form>
+
+    <div id="petparent-output"></div>
+  </div>
+
+  <script>
+     // Check if user is logged in by checking for the token in localStorage
+     document.addEventListener("DOMContentLoaded", () => {
+            const token = localStorage.getItem("token");
+
+            if (token) {
+                // If user is logged in, hide login/signup and show profile/logout buttons
+                document.getElementById("profile-link").style.display = "inline-block";
+                document.getElementById("logout-link").style.display = "inline-block";
+                document.getElementById("login-link").style.display = "none";
+                document.getElementById("signup-link").style.display = "none";
+            } else {
+                // If not logged in, show login/signup
+                document.getElementById("login-link").style.display = "inline-block";
+                document.getElementById("signup-link").style.display = "inline-block";
+                document.getElementById("profile-link").style.display = "none";
+                document.getElementById("logout-link").style.display = "none";
+            }
+        });
+
+        // Logout function to clear localStorage and redirect to login page
+        function logout() {
+            localStorage.clear();
+            window.location.href = "login.html";  // Redirect to login page after logout
+        }
+    const form = document.getElementById('petparent-form');
+    const output = document.getElementById('petparent-output');
+
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      output.innerHTML = '<p class="loading">Generating your  personalized pet parenting tips ...</p>';
+
+      const userInput = {
+  pet_name: document.getElementById('pet_name').value,
+  breed: document.getElementById('breed').value,
+  age: document.getElementById('age').value,
+  gender: document.getElementById('gender').value,
+  firsttimeraising: document.getElementById('firsttimeraising').value,
+  petraised: document.getElementById('petraised').value,
+  pet_category: document.getElementById('pet_category').value,
+};
+
+
+      try {
+  
+        const response = await fetch('http://127.0.0.1:5000/generate_parentingtips', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify(userInput)
+});
+
+
+
+  const result = await response.json();
+  console.log("Server response:", result); // <-- Add this
+
+  if (response.ok) {
+    output.innerText = result.petparenting;
+  } else {
+    output.innerHTML = `<p style="color: red;">Error: ${result.error}</p>`;
+  }
+} catch (err) {
+  console.error("Fetch error:", err); // <-- Add this
+  output.innerHTML = '<p style="color: red;">Failed to generate diet. Please try again later.</p>';
+}
+
+    });
+  </script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const currentPage = window.location.pathname.split("/").pop(); // Get the file name
+      const navLinks = document.querySelectorAll("nav a");
+  
+      navLinks.forEach(link => {
+        if (link.getAttribute("href") === currentPage) {
+          link.classList.add("active");
+        }
+      });
+  
+      // Token-based login check
+      const token = localStorage.getItem("token");
+      document.getElementById("profile-link").style.display = token ? "inline-block" : "none";
+      document.getElementById("logout-link").style.display = token ? "inline-block" : "none";
+      document.getElementById("login-link").style.display = token ? "none" : "inline-block";
+      document.getElementById("signup-link").style.display = token ? "none" : "inline-block";
+    });
+  </script>
+</body>
+</html>
